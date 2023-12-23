@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>Airdrop Faucets</title>
+    </head>
+    <body>
+        <form>
+            <label for="inputText">Enter Solana Token:</label>
+            <input type="text" id="inputText" name="inputText">
+            <button type="button" onclick="submitForm()">Submit</button>
+        </form>
+        <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+        <script>
+            const { Connection, PublicKey } = window['solanaWeb3'];
+        </script>
+        <script>
+            function submitForm() {
+                //airdrop some solana token the specific address
+                var solanaPublicKey = document.getElementById("inputText").value;
+                const connection = new Connection("https://api.devnet.solana.com");
+                let publicKeyObject = new PublicKey(solanaPublicKey);
+                const fn = (async () => {
+                    let txhash = await connection.requestAirdrop(publicKeyObject, 1e9);
+                    console.log(`txhash: ${txhash}`);
+                    const inputText = document.getElementById("inputText").value;
+                    alert("You entered: " + inputText);
+                });
+                fn();
+            }
+        </script>
+    </body>
+</html>
